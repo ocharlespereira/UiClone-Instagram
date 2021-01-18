@@ -5,7 +5,7 @@
       "image": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/1.jpeg",
       "small": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/small/1.jpeg",
       "aspectRatio": 0.834,
-      "description": "Working hard at Rocketseat!",
+      "description": "Working hard at homeoffice!",
       "authorId": 1
     },
     {
@@ -45,7 +45,7 @@
       "image": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/6.jpeg",
       "small": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/small/6.jpeg",
       "aspectRatio": 0.834,
-      "description": "Node.js + ReactJS + React Native = <3",
+      "description": "ReactJS + React Native + TypeScript = <3",
       "authorId": 3
     },
     {
@@ -53,7 +53,7 @@
       "image": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/7.jpeg",
       "small": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/small/7.jpeg",
       "aspectRatio": 0.834,
-      "description": "OmniStack to the rescue!",
+      "description": "Developer to the rescue!",
       "authorId": 1
     },
     {
@@ -61,7 +61,7 @@
       "image": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/8.jpeg",
       "small": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/small/8.jpeg",
       "aspectRatio": 0.834,
-      "description": "Rocketseat is cool!",
+      "description": "HomeOffice is cool!",
       "authorId": 2
     },
     {
@@ -69,7 +69,7 @@
       "image": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/9.jpeg",
       "small": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/small/9.jpeg",
       "aspectRatio": 0.834,
-      "description": "Have you watched our videos at YouTube?",
+      "description": "Have you watched our videos at YouTube to do developer?",
       "authorId": 4
     },
     {
@@ -109,7 +109,7 @@
       "image": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/5.jpeg",
       "small": "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/instagram-clone/small/5.jpeg",
       "aspectRatio": 0.834,
-      "description": "Working hard at Rocketseat!",
+      "description": "Working hard at HomeOffice!",
       "authorId": 4
     },
     {
@@ -164,28 +164,28 @@
   "authors": [
     {
       "id": 1,
-      "name": "dieegosf",
-      "avatar": "https://avatars0.githubusercontent.com/u/2254731?s=50&v=4"
+      "name": "charlespereira",
+      "avatar": "https://avatars2.githubusercontent.com/u/54192694?s=460&u=a0ac6a9b16621a72fd3bfd6bba0c0081c2259d5b&v=4"
     },
     {
       "id": 2,
-      "name": "cleitonsouza",
-      "avatar": "https://avatars0.githubusercontent.com/u/4669899?s=50&v=4"
+      "name": "janainasouza",
+      "avatar": "https://avatars3.githubusercontent.com/u/9215570?s=460&v=4"
     },
     {
       "id": 3,
-      "name": "pellizzetti",
-      "avatar": "https://avatars2.githubusercontent.com/u/16545335?s=50&v=4"
+      "name": "isaacbarbosa",
+      "avatar": "https://avatars0.githubusercontent.com/u/58774263?s=460&v=4"
     },
     {
       "id": 4,
-      "name": "jpdemagalhaes",
-      "avatar": "https://avatars3.githubusercontent.com/u/7268910?s=50&v=4"
+      "name": "mariapereira",
+      "avatar": "https://avatars3.githubusercontent.com/u/10901410?s=460&v=4"
     },
     {
       "id": 5,
-      "name": "jpedroschmitz",
-      "avatar": "https://avatars0.githubusercontent.com/u/26466516?s=50&v=4"
+      "name": "edmarsoares",
+      "avatar": "https://avatars1.githubusercontent.com/u/27875269?s=460&v=4"
     }
   ]
 }

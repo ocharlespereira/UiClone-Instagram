@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { FlatList, View } from "react-native";
 
 import api from "../../services/api";
 
-import { Container } from "./styles";
+import { Post, Header, Avatar, Name, PostImage, Description } from "./styles";
+
+interface feedProps {
+  id: number;
+  image?: string;
+  description?: string;
+  author: {
+    avatar?: string;
+    name: string;
+  };
+}
 
 const Feed: React.FC = () => {
-  const [feed, setFeed] = useState([]);
+  const [feed, setFeed] = useState<feedProps[] | null>();
 
   useEffect(() => {
-    // ?_expand=author&_limit=5&_page=1
     api
       .get("feed", {
         params: {
@@ -27,9 +36,26 @@ const Feed: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <Text>Feed</Text>
-    </Container>
+    <View>
+      <FlatList
+        data={feed}
+        keyExtractor={(post) => String(post.id)}
+        renderItem={({ item }) => (
+          <Post>
+            <Header>
+              <Avatar source={{ uri: item.author.avatar }} />
+              <Name>{item.author.name}</Name>
+            </Header>
+
+            <PostImage source={{ uri: item.image }} />
+
+            <Description>
+              <Name>{item.author.name}</Name> {item.description}
+            </Description>
+          </Post>
+        )}
+      />
+    </View>
   );
 };
 
