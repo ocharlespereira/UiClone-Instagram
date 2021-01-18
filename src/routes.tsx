@@ -17,6 +17,9 @@ const Routes: React.FC = () => (
         options={{
           headerTitleAlign: "center",
           headerTitle: () => <Image source={Logo} />,
+          headerStyle: {
+            backgroundColor: "#f5f5f5",
+          },
         }}
       />
     </Navigator>

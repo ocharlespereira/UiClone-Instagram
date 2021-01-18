@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <>
       <Routes />
-      <StatusBar style="light" />
+      <StatusBar backgroundColor="#f5f5f5" style="auto" />
     </>
   );
 };
