@@ -26,9 +26,9 @@ export const Name = styled.Text`
   font-weight: bold;
 `;
 
-export const PostImage = styled.Image<ContainerProps>`
+export const PostImage = styled.Image`
   width: 100%;
-  aspect-ratio: ${(props) => props.ratio};
+  aspect-ratio: ${(props: ContainerProps) => props.ratio};
 `;
 
 export const Description = styled.Text`

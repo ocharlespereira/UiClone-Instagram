@@ -17,23 +17,35 @@ interface feedProps {
 }
 
 const Feed: React.FC = () => {
-  const [feed, setFeed] = useState<feedProps[] | null>();
+  const [feed, setFeed] = useState<feedProps[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
-  useEffect(() => {
+  const handleLoadgPage = (pageNumber = page) => {
+    if (total && pageNumber > total) return;
+
     api
       .get("feed", {
         params: {
           _expand: "author",
           _limit: 5,
-          _page: 1,
+          _page: pageNumber,
         },
       })
       .then((res) => {
-        setFeed(res.data);
+        const totalItems = res.headers["x-total-count"];
+
+        setTotal(Math.floor(totalItems / 5));
+        setFeed((prev) => [...prev, ...res.data]);
+        setPage(pageNumber + 1);
       })
       .catch((error) => {
         console.log("error => ", error);
       });
+  };
+
+  useEffect(() => {
+    handleLoadgPage();
   }, []);
 
   return (
@@ -41,6 +53,8 @@ const Feed: React.FC = () => {
       <FlatList
         data={feed}
         keyExtractor={(post) => String(post.id)}
+        onEndReached={() => handleLoadgPage()}
+        onEndReachedThreshold={0.1}
         renderItem={({ item }) => (
           <Post>
             <Header>
