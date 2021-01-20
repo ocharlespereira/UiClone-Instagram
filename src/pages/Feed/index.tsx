@@ -28,12 +28,13 @@ const Feed: React.FC = () => {
   const [feed, setFeed] = useState<feedProps[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const handleLoadgPage = (pageNumber = page) => {
+  const handleLoadgPage = (pageNumber = page, shouldRefresh = false) => {
     if (total && pageNumber > total) return;
 
-    setLoading(true);
+    setLoad(true);
     api
       .get("feed", {
         params: {
@@ -46,13 +47,21 @@ const Feed: React.FC = () => {
         const totalItems = res.headers["x-total-count"];
 
         setTotal(Math.floor(totalItems / 5));
-        setFeed((prev) => [...prev, ...res.data]);
+        setFeed((prev) => (shouldRefresh ? res.data : [...prev, ...res.data]));
         setPage(pageNumber + 1);
-        setLoading(false);
+        setLoad(false);
       })
       .catch((error) => {
         console.log("error => ", error);
       });
+  };
+
+  const handleRefreshList = () => {
+    setRefreshing(true);
+
+    handleLoadgPage(1, true);
+
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -66,7 +75,9 @@ const Feed: React.FC = () => {
         keyExtractor={(post) => String(post.id)}
         onEndReached={() => handleLoadgPage()}
         onEndReachedThreshold={0.1}
-        ListFooterComponent={loading && <Loading />}
+        onRefresh={handleRefreshList}
+        refreshing={refreshing}
+        ListFooterComponent={load && <Loading />}
         renderItem={({ item }) => (
           <Post>
             <Header>
