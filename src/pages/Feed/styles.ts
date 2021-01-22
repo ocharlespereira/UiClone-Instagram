@@ -1,9 +1,9 @@
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
 
 import { FeedProps } from "./index";
 
-export const List = styled(FlatList as new () => FlatList<FeedProps>)``;
+export const ListFeeds = styled(FlatList as new () => FlatList<FeedProps>)``;
 
 export const Post = styled.View`
   margin-top: 10px;

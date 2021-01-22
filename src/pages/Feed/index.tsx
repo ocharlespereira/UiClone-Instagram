@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 
 import LazzyImage from "../../components/LazzyImage";
 
 import api from "../../services/api";
 
 import {
-  List,
+  ListFeeds,
   Post,
   Header,
   Avatar,
@@ -30,8 +31,8 @@ const Feed: React.FC = () => {
   const [feeds, setFeeds] = useState<FeedProps[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [load, setLoad] = useState<boolean>(false);
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [load, setLoad] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleLoadgPage = (pageNumber = page, shouldRefresh = false) => {
     if (total && pageNumber > total) return;
@@ -51,10 +52,12 @@ const Feed: React.FC = () => {
         setTotal(Math.floor(totalItems / 5));
         setFeeds((prev) => (shouldRefresh ? res.data : [...prev, ...res.data]));
         setPage(pageNumber + 1);
-        setLoad(false);
       })
       .catch((error) => {
         console.log("error => ", error);
+      })
+      .finally(() => {
+        setLoad(false);
       });
   };
 
@@ -71,8 +74,8 @@ const Feed: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <List
+    <View>
+      <ListFeeds
         data={feeds}
         keyExtractor={(feed) => String(feed.id)}
         onEndReached={() => handleLoadgPage()}
@@ -80,28 +83,28 @@ const Feed: React.FC = () => {
         onRefresh={handleRefreshList}
         refreshing={refreshing}
         ListFooterComponent={load && <Loading />}
-        renderItem={({ item }) => (
+        renderItem={({ item: feed }) => (
           <Post>
             <Header>
-              <Avatar source={{ uri: item.author.avatar }} />
-              <Name>{item.author.name}</Name>
+              <Avatar source={{ uri: feed.author.avatar }} />
+              <Name>{feed.author.name}</Name>
             </Header>
 
             <LazzyImage
-              aspectRatio={item.aspectRatio}
-              // smallSource={item.small}
-              smallSource={{ uri: item.small }}
-              // source={item.image}
-              source={{ uri: item.image }}
+              aspectRatio={feed.aspectRatio}
+              // smallSource={{ uri: feed.small }}
+              // source={{ uri: feed.image }}
+              smallSource={feed.small}
+              source={feed.image}
             />
 
             <Description>
-              <Name>{item.author.name}</Name> {item.description}
+              <Name>{feed.author.name}</Name> {feed.description}
             </Description>
           </Post>
         )}
       />
-    </>
+    </View>
   );
 };
 

@@ -10,3 +10,5 @@
     "strict": true
   }
 }
+
+// "noImplicitAny": false
