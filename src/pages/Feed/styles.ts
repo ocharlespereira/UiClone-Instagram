@@ -1,8 +1,9 @@
+import { FlatList } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 
-interface ContainerProps {
-  ratio: boolean;
-}
+import { FeedProps } from "./index";
+
+export const List = styled(FlatList as new () => FlatList<FeedProps>)``;
 
 export const Post = styled.View`
   margin-top: 10px;
@@ -24,11 +25,6 @@ export const Avatar = styled.Image`
 export const Name = styled.Text`
   color: #333;
   font-weight: bold;
-`;
-
-export const PostImage = styled.Image`
-  width: 100%;
-  aspect-ratio: ${(props: ContainerProps) => props.ratio};
 `;
 
 export const Description = styled.Text`

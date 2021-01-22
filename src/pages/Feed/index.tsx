@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+
+import LazzyImage from "../../components/LazzyImage";
 
 import api from "../../services/api";
 
 import {
+  List,
   Post,
   Header,
   Avatar,
   Name,
-  PostImage,
   Description,
   Loading,
 } from "./styles";
 
-interface feedProps {
+export interface FeedProps {
   id: number;
-  image?: string;
-  aspectRatio?: number;
+  image: string;
+  small: string;
+  aspectRatio: number;
   description?: string;
   author: {
     avatar?: string;
@@ -25,7 +27,7 @@ interface feedProps {
 }
 
 const Feed: React.FC = () => {
-  const [feed, setFeed] = useState<feedProps[]>([]);
+  const [feeds, setFeeds] = useState<FeedProps[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [load, setLoad] = useState<boolean>(false);
@@ -47,7 +49,7 @@ const Feed: React.FC = () => {
         const totalItems = res.headers["x-total-count"];
 
         setTotal(Math.floor(totalItems / 5));
-        setFeed((prev) => (shouldRefresh ? res.data : [...prev, ...res.data]));
+        setFeeds((prev) => (shouldRefresh ? res.data : [...prev, ...res.data]));
         setPage(pageNumber + 1);
         setLoad(false);
       })
@@ -69,10 +71,10 @@ const Feed: React.FC = () => {
   }, []);
 
   return (
-    <View>
-      <FlatList
-        data={feed}
-        keyExtractor={(post) => String(post.id)}
+    <>
+      <List
+        data={feeds}
+        keyExtractor={(feed) => String(feed.id)}
         onEndReached={() => handleLoadgPage()}
         onEndReachedThreshold={0.1}
         onRefresh={handleRefreshList}
@@ -85,7 +87,13 @@ const Feed: React.FC = () => {
               <Name>{item.author.name}</Name>
             </Header>
 
-            <PostImage ratio={item.aspectRatio} source={{ uri: item.image }} />
+            <LazzyImage
+              aspectRatio={item.aspectRatio}
+              // smallSource={item.small}
+              smallSource={{ uri: item.small }}
+              // source={item.image}
+              source={{ uri: item.image }}
+            />
 
             <Description>
               <Name>{item.author.name}</Name> {item.description}
@@ -93,7 +101,7 @@ const Feed: React.FC = () => {
           </Post>
         )}
       />
-    </View>
+    </>
   );
 };
 
