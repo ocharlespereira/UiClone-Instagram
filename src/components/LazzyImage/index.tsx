@@ -7,6 +7,7 @@ interface LazzyProps {
   smallSource: HTMLImageElement;
   source: HTMLImageElement;
   aspectRatio: number;
+  shouldLoad: boolean;
 }
 
 const OriginalAnimated = Animated.createAnimatedComponent(Original);
@@ -16,22 +17,27 @@ const LazzyImage: React.FC<LazzyProps> = ({
   smallSource,
   source,
   aspectRatio,
+  shouldLoad,
 }) => {
   const [loaded, setLoaded] = useState(false);
+
+  console.log("shouldLoad", shouldLoad);
 
   const handleAnimated = () => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 1000, //em milissegundos
+      duration: 600, //em milissegundos
       useNativeDriver: true,
     }).start();
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoaded(true);
-    }, 1500);
-  }, []);
+    if (shouldLoad) {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 1500);
+    }
+  }, [shouldLoad]);
 
   return (
     <Small

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 
 import LazzyImage from "../../components/LazzyImage";
@@ -27,12 +27,17 @@ export interface FeedProps {
   };
 }
 
+interface Changed {
+  id: number;
+}
+
 const Feed: React.FC = () => {
   const [feeds, setFeeds] = useState<FeedProps[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [load, setLoad] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [viewable, setViewable] = useState<Changed[]>([]);
 
   const handleLoadgPage = (pageNumber = page, shouldRefresh = false) => {
     if (total && pageNumber > total) return;
@@ -69,6 +74,10 @@ const Feed: React.FC = () => {
     setRefreshing(false);
   };
 
+  const handleViwableChanged = useCallback(({ changed }) => {
+    setViewable(changed.map(({ item }: any) => item.id));
+  }, []);
+
   useEffect(() => {
     handleLoadgPage();
   }, []);
@@ -77,11 +86,15 @@ const Feed: React.FC = () => {
     <View>
       <ListFeeds
         data={feeds}
-        keyExtractor={(feed) => String(feed.id)}
+        keyExtractor={(feed: { id: any }) => String(feed.id)}
         onEndReached={() => handleLoadgPage()}
         onEndReachedThreshold={0.1}
         onRefresh={handleRefreshList}
         refreshing={refreshing}
+        //pega informações das imagens que está em tela
+        onViewableItemsChanged={handleViwableChanged}
+        //percentual de quanto tempo durará para carregar imagem original
+        viewbilityConfig={{ viewAreaCoveragePercentThreshold: 10 }}
         ListFooterComponent={load && <Loading />}
         renderItem={({ item: feed }) => (
           <Post>
@@ -91,9 +104,8 @@ const Feed: React.FC = () => {
             </Header>
 
             <LazzyImage
+              shouldLoad={viewable.includes(feed.id)}
               aspectRatio={feed.aspectRatio}
-              // smallSource={{ uri: feed.small }}
-              // source={{ uri: feed.image }}
               smallSource={feed.small}
               source={feed.image}
             />
