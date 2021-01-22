@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Animated } from "react-native";
 
 import { Small, Original } from "./styles";
 
@@ -8,6 +9,9 @@ interface LazzyProps {
   aspectRatio: number;
 }
 
+const OriginalAnimated = Animated.createAnimatedComponent(Original);
+const opacity = new Animated.Value(0);
+
 const LazzyImage: React.FC<LazzyProps> = ({
   smallSource,
   source,
@@ -15,7 +19,13 @@ const LazzyImage: React.FC<LazzyProps> = ({
 }) => {
   const [loaded, setLoaded] = useState(false);
 
-  const handleAnimated = () => {};
+  const handleAnimated = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 1000, //em milissegundos
+      useNativeDriver: true,
+    }).start();
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,7 +41,8 @@ const LazzyImage: React.FC<LazzyProps> = ({
       blurRadius={1}
     >
       {loaded && (
-        <Original
+        <OriginalAnimated
+          style={{ opacity }}
           source={{ uri: source }}
           ratio={aspectRatio}
           resizeMode="contain"
